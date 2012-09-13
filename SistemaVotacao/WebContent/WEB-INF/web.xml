@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>SistemaVotacao</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>DetalheVotacaoServlet</display-name>
+    <servlet-name>DetalheVotacaoServlet</servlet-name>
+    <servlet-class>votacao.servlet.DetalheVotacaoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DetalheVotacaoServlet</servlet-name>
+    <url-pattern>/DetalheVotacaoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Lista de votacoes</description>
+    <display-name>ListaVotacoesServlet</display-name>
+    <servlet-name>ListaVotacoesServlet</servlet-name>
+    <servlet-class>votacao.servlet.ListaVotacoesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListaVotacoesServlet</servlet-name>
+    <url-pattern>/ListaVotacoesServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Deposita o voto de um eleitor em um candidato de determinada votação</description>
+    <display-name>VotacaoServlet</display-name>
+    <servlet-name>VotacaoServlet</servlet-name>
+    <servlet-class>votacao.servlet.VotacaoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VotacaoServlet</servlet-name>
+    <url-pattern>/VotacaoServlet</url-pattern>
+  </servlet-mapping>
+</web-app>
