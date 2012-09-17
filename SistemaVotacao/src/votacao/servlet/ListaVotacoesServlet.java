@@ -10,6 +10,7 @@ import votacao.bean.Votacao;
 import votacao.dao.VotacaoDao;
 import votacao.exception.BaseException;
 
+@SuppressWarnings("serial")
 public class ListaVotacoesServlet extends ServletBase {
 
     /**
@@ -26,11 +27,11 @@ public class ListaVotacoesServlet extends ServletBase {
 		
 		Usuario user = (Usuario)request.getSession().getAttribute("user");
 		
-				
+		
 		VotacaoDao votacaoDao = new VotacaoDao();
 		List<Votacao> votacoes = votacaoDao.buscarPorUsuario(user);
 		try {
-			String nextJSP = "votacao.jsp";
+			String nextJSP = "/restrito/eleitor/votacao.jsp";
 			request.setAttribute("votacoes", votacoes);
 			request.getRequestDispatcher(nextJSP).forward(request, response);
 		} catch (Exception e) {

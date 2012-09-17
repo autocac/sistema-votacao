@@ -17,8 +17,8 @@ public class ComparecimentoDao {
 	public void salvar(Comparecimento comparecimento) throws DaoException{
 		for (Comparecimento c : listaComparecimento) {
 			if (c.getIdVotacao() == comparecimento.getIdVotacao() 
-					&& c.getIdUsuario() == comparecimento.getIdUsuario()) {
-				throw new DaoException("Este usuario ja compareceu e votou nesta votação");
+					&& c.getLoginUsuario().equals(comparecimento.getLoginUsuario())) {
+				throw new DaoException("Este usuario ja compareceu e votou nesta votaï¿½ï¿½o");
 			}
 		}
 		listaComparecimento.add(comparecimento);

@@ -10,28 +10,33 @@
 	<body>
 		<h1>Login - Sistema Votação</h1>
 		<h2>${msg}</h2>
-		<!-- <form id="frmLogin" name="frmLogin" action="${action}"> -->
-		<form id="frmLogin" name="frmLogin" action="">
-			<table>
-				<tr>
-					<td>Usuário : </td>
-					<td>
-						<input type="text" id="user" name="user" size="15"  autocomplete="off" />
-					</td>
-				</tr>
-				<tr>
-					<td>Senha : </td>
-					<td>
-						<input type="password" id="pass" name="pass" size="15"/>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<input type="submit" id="btnOk" name="btnOk" value="OK"/>
-					</td>
-				</tr>
-			</table>
-		</form>
+		<%
+			request.getSession().removeAttribute("user");
+			String action = (String)request.getAttribute("action");
+			if (action == null || action.endsWith("jsp")) {
+				action = "/SistemaVotacao/ListaVotacoesServlet";
+			}
+			request.setAttribute("action", action);
+		%>
+		<form id="frmLogin" name="frmLogin" action="${action}">
+		<table
+			style="border-collapse: collapse; border-left: 3px solid #000000; border-top: 3px solid #000000; border-right: 3px solid #000000; border-bottom: 3px solid #000000; width: 300px; height: 200px;"
+			align="center">
+			<tr>
+				<td align="right">Usuário :</td>
+				<td><input type="text" id="user" name="user" size="15"
+					autocomplete="off" /></td>
+			</tr>
+			<tr>
+				<td align="right">Senha :</td>
+				<td><input type="password" id="pass" name="pass" size="15" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" id="btnOk" name="btnOk" value="OK" />
+				</td>
+			</tr>
+		</table>
+	</form>
 	</body>
 </html>

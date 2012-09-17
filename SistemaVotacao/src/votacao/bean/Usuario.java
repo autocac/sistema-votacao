@@ -1,8 +1,10 @@
 package votacao.bean;
 
+import votacao.bean.Usuario.Tipo;
+
 public class Usuario {
 
-	enum Tipo {
+	public enum Tipo {
 		ELEITOR('E'),
 		ADMINISTRADOR('A');
 		
@@ -12,6 +14,10 @@ public class Usuario {
 			this.codigo = codigo;
 		}
 		
+		public char getCodigo() {
+			return codigo;
+		}
+
 		public static Tipo valueOf(char codigo) {
 			for (Tipo t : Tipo.values()) {
 				if (t.codigo == codigo) {
@@ -46,6 +52,10 @@ public class Usuario {
 		this.tipo = Tipo.valueOf(codigo);
 	}
 
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+	
 	public Tipo getTipo() {
 		return tipo;
 	}
@@ -59,8 +69,9 @@ public class Usuario {
 	}
 
 	public boolean isSenhaOk(String senha) {
-		//[TODO:Alterar antes de colocar em produção]
+		//[TODO:Alterar antes de colocar em produï¿½ï¿½o]
 		//return this.senha.equals(senha);
 		return true;
 	}
+
 }

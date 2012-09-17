@@ -1,9 +1,8 @@
 package votacao.servlet;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import votacao.bean.Candidato;
 import votacao.bean.Comparecimento;
@@ -35,31 +34,36 @@ public class VotacaoServlet extends ServletBase {
 		try {
 			int idVotacao = Integer.parseInt(request.getParameter("idVotacao"));
 			int idCandidato = Integer.parseInt(request.getParameter("idCandidato"));
-			int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
 			
 			CandidatoDao candidatoDao = new CandidatoDao();
-			UsuarioDao usuarioDao = new UsuarioDao();
 			VotacaoDao votacaoDao = new VotacaoDao();
 			
-			Usuario usuario = usuarioDao.buscarPorId(idUsuario);
+			Usuario usuario = (Usuario)request.getSession().getAttribute("user");
 			Votacao votacao = votacaoDao.buscarPorId(idVotacao);
 			
 			Candidato candidato = candidatoDao.buscarPorId(idVotacao, idCandidato);
 			
 			
-			if (candidato != null) {
-				candidato.receberVoto();
+			if (candidato == null) {
+				throw new BaseException("Candidato nao encontrado >> idVotacao=" + idVotacao + "; idCandidato=" + idCandidato);
 			}
-			
+
 			ComparecimentoDao comparecimentoDao = new ComparecimentoDao();
 			Comparecimento comparecimento = new Comparecimento();
 			comparecimento.setIdCandidato(idCandidato);
 			comparecimento.setIdVotacao(idVotacao);
-			comparecimento.setIdUsuario(idUsuario);
+			comparecimento.setLoginUsuario(usuario.getLogin());
 			
 			comparecimentoDao.salvar(comparecimento);
 			
-			String nextJSP = "detalheVotacao.jsp";
+			if (usuario.getTipo() == Usuario.Tipo.ELEITOR) {
+				//chutando usuario após votar
+				request.getSession().invalidate();
+			}
+			
+			candidato.receberVoto();
+
+			String nextJSP = "/restrito/eleitor/conclusaoVotacao.jsp";
 			request.setAttribute("votacao", votacao);
 			request.getRequestDispatcher(nextJSP).forward(request, response);
 		} catch (Exception e) {

@@ -16,6 +16,7 @@ import votacao.exception.BaseException;
 import votacao.exception.UsuarioOuSenhaInvalidosException;
 
 public abstract class ServletBase extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
        
     public ServletBase() {
@@ -44,14 +45,16 @@ public abstract class ServletBase extends HttpServlet {
 				if (user == null) {
 					String usuario = request.getParameter("user");
 					String senha = request.getParameter("pass");
-					UsuarioDao usuarioDao = new UsuarioDao();
-					
-					user = usuarioDao.buscarPorLogin(usuario);
-					if (user == null || !user.isSenhaOk(senha)) {
-						throw new UsuarioOuSenhaInvalidosException("Usu·rio ou senha inv·lidos");
+
+					if (usuario != null) {
+						UsuarioDao usuarioDao = new UsuarioDao();
+						user = usuarioDao.buscarPorLogin(usuario);
+						if (user == null || !user.isSenhaOk(senha)) {
+							throw new UsuarioOuSenhaInvalidosException("Usu√°rio ou senha inv√°lidos");
+						}
+						request.setAttribute("user", user);
+						session.setAttribute("user", user);
 					}
-					request.setAttribute("user", user);
-					session.setAttribute("user", user);
 				}
 				execute(request, response);
 			}
@@ -74,9 +77,9 @@ public abstract class ServletBase extends HttpServlet {
 		String nextJSP = "/login.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextJSP);
-		String servletPath = request.getServletPath();
-		int ini = servletPath.lastIndexOf("/") + 1;
-		request.setAttribute("action", servletPath.substring(ini));
+//		String servletPath = request.getServletPath();
+//		int ini = servletPath.lastIndexOf("/") + 1;
+//		request.setAttribute("action", servletPath.substring(ini));
 		dispatcher.forward(request,response);
 	}
 	

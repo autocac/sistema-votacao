@@ -35,6 +35,10 @@ public class Candidato {
 		return numeroVotos;
 	}
 	
+	public void setNumeroVotos(int numeroVotos) {
+		this.numeroVotos = numeroVotos;
+	}
+
 	public void receberVoto() {
 		this.numeroVotos++;
 	}

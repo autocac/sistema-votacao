@@ -29,6 +29,10 @@
     <servlet-name>ListaVotacoesServlet</servlet-name>
     <url-pattern>/ListaVotacoesServlet</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ListaVotacoesServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description>Deposita o voto de um eleitor em um candidato de determinada votação</description>
     <display-name>VotacaoServlet</display-name>
@@ -38,5 +42,63 @@
   <servlet-mapping>
     <servlet-name>VotacaoServlet</servlet-name>
     <url-pattern>/VotacaoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LogoutServlet</display-name>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>votacao.servlet.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EleitorServlet</display-name>
+    <servlet-name>EleitorServlet</servlet-name>
+    <servlet-class>votacao.servlet.EleitorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EleitorServlet</servlet-name>
+    <url-pattern>/EleitorServlet</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <display-name>JspAreaRestritaFilter</display-name>
+    <filter-name>JspAreaRestritaFilter</filter-name>
+    <filter-class>votacao.servlet.JspAreaRestritaFilter</filter-class>
+    <init-param>
+      <param-name>AREA_RESTRITA_ADMIN</param-name>
+      <param-value>/restrito/admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>AREA_RESTRITA_ELEITOR</param-name>
+      <param-value>/restrito/eleitor</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>JspAreaRestritaFilter</filter-name>
+    <url-pattern>/restrito/admin/*</url-pattern>
+    <url-pattern>/restrito/eleitor/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListaEleitoresServlet</display-name>
+    <servlet-name>ListaEleitoresServlet</servlet-name>
+    <servlet-class>votacao.servlet.ListaEleitoresServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListaEleitoresServlet</servlet-name>
+    <url-pattern>/ListaEleitoresServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadServlet</display-name>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>votacao.servlet.UploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/UploadServlet</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -3,13 +3,13 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<title>Votação ${votacao.id} - Sistema Votação</title>
-		<script type="Javascript">
+		<script>
 			var clicado = 0;
 			function votar(idVotacao, idCandidato) {
 				if (clicado == 0) {
@@ -26,48 +26,43 @@
 		</script>
 	</head>
 	<body>
-		<c:if test="${user.tipo eq Usuario.Tipo.ADMINISTRADOR}">
-			<table border="1">
-				<tr>
-					<td>
-						<a href="/NovaVotacaoServlet">Nova Votacao</a>
-					</td>
-					<td>
-						<a href="/NovoEleitorServlet">Novo Eleitor</a>
-					</td>
-				</tr>
-			</table>
-		</c:if>
+		<jsp:include page="../../menu.jsp" />
 		
-		<h1>Votação ${votacao.id} - Sistema Votação</h1>
+		<h1 align="center">Votação ${votacao.id}</h1>
 		
 		<c:choose>
-			<c:if test="${votacao.encerrada}">
-				
-				<h2>Votação ${votacao.descricao} Encerrada</h2>
-				
-			</c:if>
+			<c:when test="${votacao.encerrada}">
+				<h2 align="center">Votação ${votacao.descricao} Encerrada</h2>
+			</c:when>
 			<c:otherwise>
 			
-				<h2>${votacao.descricao}</h2>
-				<h3>${msg}</h3>
-				<h4>Término da votação : ${votacao.periodo.dataFim}</h4>
+				<h2 align="center">${votacao.descricao}</h2>
+				<h3 align="center">${msg}</h3>
+				<h4 align="center">
+					Término da votação : <fmt:formatDate value="${votacao.periodo.dataFim}" pattern="dd/MM/yyyy HH:mm:ss"/>
+				</h4>
 				
-				<h5>Vote em um dos candidatos abaixo</h5>
+				<h5 align="center">Vote em um dos candidatos abaixo</h5>
 				
-				<ul>
-					<c:forEach var="candidado" items="${votacao.candidatos}">
-						<li>
-							<a href="#" onClick="javascript:votar(${votacao.id}, ${candidado.id});">
-							${candidado.id} - ${candidado.descricao}</a>
-						</li>
-					</c:forEach>
-				</ul>
-							
+				<table align="center">
+					<tr>
+						<td>
+				
+							<ul>
+								<c:forEach var="candidado" items="${votacao.candidatos}">
+									<li>
+										<a href="#" onclick="javascript:votar(${votacao.id}, ${candidado.id});">
+										${candidado.id} - ${candidado.descricao} - Votos : ${candidado.numeroVotos}</a>
+									</li>
+								</c:forEach>
+							</ul>
+						</td>
+					</tr>
+				</table>
 			</c:otherwise>
 		</c:choose>
 		
-		<form id="frmVotacao" name="frmVotacao" action="VotacaoServlet">
+		<form id="frmVotacao" name="frmVotacao" action="/SistemaVotacao/VotacaoServlet">
 			<input type="hidden" id="idVotacao" name="idVotacao" />
 			<input type="hidden" id="idCandidato" name="idCandidato" />
 		</form>
