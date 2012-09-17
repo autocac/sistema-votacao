@@ -10,7 +10,7 @@
 		<title>Votação ${votacao.id} - Sistema Votação</title>
 	</head>
 	<body>
-		<jsp:include page="../../menu.jsp" />
+		<jsp:include page="/menu.jsp" />
 		
 		<h1 align="center">Votação ${votacao.id}</h1>
 		

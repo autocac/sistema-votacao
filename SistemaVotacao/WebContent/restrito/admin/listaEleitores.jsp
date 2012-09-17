@@ -11,7 +11,7 @@
 		<title>Votações - Sistema Votação</title>
 	</head>
 	<body>
-		<jsp:include page="../../menu.jsp" />
+		<jsp:include page="/menu.jsp" />
 
 		<h1 align="center">Lista Eleitores</h1>
 		<h2>${msg}</h2>

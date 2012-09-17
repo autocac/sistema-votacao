@@ -176,7 +176,7 @@
 		</script>
 	</head>
 	<body>
-		<jsp:include page="menu.jsp" />
+		<jsp:include page="/menu.jsp" />
 
 		<h1 align="center">Votação</h1>
 		<h2>${msg}</h2>
