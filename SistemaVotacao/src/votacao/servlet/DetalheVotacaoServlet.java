@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import votacao.bean.Votacao;
+import votacao.dao.DaoFactory;
 import votacao.dao.VotacaoDao;
 import votacao.exception.BaseException;
 
@@ -27,7 +28,7 @@ public class DetalheVotacaoServlet extends ServletBase {
 		try {
 			int idVotacao = Integer.parseInt(request.getParameter("idVotacao"));
 
-			VotacaoDao votacaoDao = new VotacaoDao();
+			VotacaoDao votacaoDao = DaoFactory.getInstance().getVotacaoDao();
 
 			Votacao votacao = votacaoDao.buscarPorId(idVotacao);
 

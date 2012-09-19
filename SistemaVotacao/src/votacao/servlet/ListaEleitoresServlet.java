@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import votacao.bean.Usuario;
+import votacao.dao.DaoFactory;
 import votacao.dao.UsuarioDao;
 import votacao.exception.BaseException;
 
@@ -25,7 +26,7 @@ public class ListaEleitoresServlet extends ServletBase {
 			String nome = request.getParameter("nome");
 			String login = request.getParameter("login");
 
-			UsuarioDao usuarioDao = new UsuarioDao();
+			UsuarioDao usuarioDao = DaoFactory.getInstance().getUsuarioDao();
 			
 			List<Usuario> lista = usuarioDao.buscarTodosVotantes();
 

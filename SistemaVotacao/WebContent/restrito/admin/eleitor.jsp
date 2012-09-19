@@ -147,7 +147,7 @@
 				<tr>
 					<td>
 						<c:choose>
-							<c:when test="${loginState eq 'disabled'}">
+							<c:when test="${loginState eq 'readonly'}">
 								<input type="button" id="btnAgapar" name="btnAgapar" value="Apagar" onclick="javascript:apagar()" /> 
 							</c:when>
 						</c:choose>

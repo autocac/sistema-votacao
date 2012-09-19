@@ -11,7 +11,7 @@
 				<a href="/SistemaVotacao/ListaVotacoesServlet">Lista Votações</a>
 			</td>
 			<td>
-				<a href="/SistemaVotacao/NovaVotacaoServlet">Nova Votação</a>
+				<a href="/SistemaVotacao/VotacaoServlet">Nova Votação</a>
 			</td>
 			<td>
 				<a href="/SistemaVotacao/EleitorServlet">Novo Eleitor</a>

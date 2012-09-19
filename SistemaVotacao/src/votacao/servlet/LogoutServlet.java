@@ -1,13 +1,8 @@
 package votacao.servlet;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import votacao.bean.Usuario;
-import votacao.bean.Votacao;
-import votacao.dao.VotacaoDao;
 import votacao.exception.BaseException;
 
 

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import votacao.bean.Usuario;
 import votacao.bean.Votacao;
+import votacao.dao.DaoFactory;
 import votacao.dao.VotacaoDao;
 import votacao.exception.BaseException;
 
@@ -28,7 +29,7 @@ public class ListaVotacoesServlet extends ServletBase {
 		Usuario user = (Usuario)request.getSession().getAttribute("user");
 		
 		
-		VotacaoDao votacaoDao = new VotacaoDao();
+		VotacaoDao votacaoDao = DaoFactory.getInstance().getVotacaoDao();
 		List<Votacao> votacoes = votacaoDao.buscarPorUsuario(user);
 		try {
 			String nextJSP = "/restrito/eleitor/votacao.jsp";

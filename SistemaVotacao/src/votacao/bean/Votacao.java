@@ -48,6 +48,6 @@ public class Votacao {
 		this.administrador = administrador;
 	}
 	public boolean isEncerrada() {
-		return !this.periodo.dentroDoPeriodo(new Date());
+		return !this.periodo.dentroDoPeriodo(this.periodo.getDataNormalizada(new Date()));
 	}
 }

@@ -25,7 +25,7 @@ public class Periodo {
 		this(dataInicio, dataFim, "yyyy-MM-dd HH:mm:ss.SSS");
 	}
 
-	private Date getDataNormalizada(Date date) {
+	public Date getDataNormalizada(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat(this.padraoData);
 		try {
 			date = sdf.parse(sdf.format(date));

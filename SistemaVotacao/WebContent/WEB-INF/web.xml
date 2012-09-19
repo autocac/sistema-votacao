@@ -35,13 +35,13 @@
   </servlet-mapping>
   <servlet>
     <description>Deposita o voto de um eleitor em um candidato de determinada votação</description>
-    <display-name>VotacaoServlet</display-name>
-    <servlet-name>VotacaoServlet</servlet-name>
-    <servlet-class>votacao.servlet.VotacaoServlet</servlet-class>
+    <display-name>ConclusaoVotacaoServlet</display-name>
+    <servlet-name>ConclusaoVotacaoServlet</servlet-name>
+    <servlet-class>votacao.servlet.ConclusaoVotacaoServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>VotacaoServlet</servlet-name>
-    <url-pattern>/VotacaoServlet</url-pattern>
+    <servlet-name>ConclusaoVotacaoServlet</servlet-name>
+    <url-pattern>/ConclusaoVotacaoServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -100,5 +100,15 @@
   <servlet-mapping>
     <servlet-name>UploadServlet</servlet-name>
     <url-pattern>/UploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VotacaoServlet</display-name>
+    <servlet-name>VotacaoServlet</servlet-name>
+    <servlet-class>votacao.servlet.VotacaoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VotacaoServlet</servlet-name>
+    <url-pattern>/VotacaoServlet</url-pattern>
   </servlet-mapping>
 </web-app>

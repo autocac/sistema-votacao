@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import votacao.bean.Usuario;
+import votacao.dao.DaoFactory;
 import votacao.dao.UsuarioDao;
 import votacao.exception.BaseException;
 
@@ -29,7 +30,7 @@ public class EleitorServlet extends ServletBase {
 					String senha = request.getParameter("senha");
 					String nome = request.getParameter("nome");
 					
-					UsuarioDao usuarioDao = new UsuarioDao();
+					UsuarioDao usuarioDao = DaoFactory.getInstance().getUsuarioDao();
 					user = usuarioDao.buscarPorLogin(login);
 					if (user == null) {
 						user = new Usuario();
@@ -52,12 +53,12 @@ public class EleitorServlet extends ServletBase {
 				}
 
 			} else if ("apagar".equals(acao)) {
-				UsuarioDao usuarioDao = new UsuarioDao();
+				UsuarioDao usuarioDao =DaoFactory.getInstance().getUsuarioDao();
 				usuarioDao.apagar(login);
 				msg = "Usuario apagado com sucesso";
 				request.setAttribute("msg", msg);
 			} else {
-				UsuarioDao usuarioDao = new UsuarioDao();
+				UsuarioDao usuarioDao = DaoFactory.getInstance().getUsuarioDao();
 				user = usuarioDao.buscarPorLogin(login);
 			}
 			

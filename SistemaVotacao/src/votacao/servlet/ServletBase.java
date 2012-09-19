@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import votacao.bean.Usuario;
+import votacao.dao.DaoFactory;
 import votacao.dao.UsuarioDao;
 import votacao.exception.BaseException;
 import votacao.exception.UsuarioOuSenhaInvalidosException;
@@ -47,7 +48,7 @@ public abstract class ServletBase extends HttpServlet {
 					String senha = request.getParameter("pass");
 
 					if (usuario != null) {
-						UsuarioDao usuarioDao = new UsuarioDao();
+						UsuarioDao usuarioDao = DaoFactory.getInstance().getUsuarioDao();
 						user = usuarioDao.buscarPorLogin(usuario);
 						if (user == null || !user.isSenhaOk(senha)) {
 							throw new UsuarioOuSenhaInvalidosException("Usuário ou senha inválidos");
