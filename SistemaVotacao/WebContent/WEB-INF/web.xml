@@ -131,4 +131,28 @@
     <servlet-name>GetImageServlet</servlet-name>
     <url-pattern>/GetImageServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ResultadosServlet</display-name>
+    <servlet-name>ResultadosServlet</servlet-name>
+    <servlet-class>votacao.servlet.ResultadosServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResultadosServlet</servlet-name>
+    <url-pattern>/ResultadosServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DetalheResultadoServlet</display-name>
+    <servlet-name>DetalheResultadoServlet</servlet-name>
+    <servlet-class>votacao.servlet.DetalheResultadoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DetalheResultadoServlet</servlet-name>
+    <url-pattern>/DetalheResultadoServlet</url-pattern>
+  </servlet-mapping>
+  <context-param>
+  	<param-name>conf</param-name>
+	<param-value>/WEB-INF/classes/conf.properties</param-value>
+  </context-param>
 </web-app>

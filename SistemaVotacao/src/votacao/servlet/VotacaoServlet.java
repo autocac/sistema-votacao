@@ -1,12 +1,9 @@
 package votacao.servlet;
 
-import java.io.File;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import votacao.bean.Candidato;
 import votacao.bean.Periodo;
 import votacao.bean.Usuario;
-import votacao.bean.VideoCandidato;
 import votacao.bean.Votacao;
 import votacao.dao.DaoFactory;
 import votacao.dao.UsuarioDao;
 import votacao.dao.VotacaoDao;
 import votacao.exception.BaseException;
+import votacao.exception.DaoException;
 import votacao.exception.UploadException;
 import votacao.util.UploadManager;
 
@@ -112,8 +109,9 @@ public class VotacaoServlet extends ServletBase {
 	/**
 	 * @param participantes
 	 * @return
+	 * @throws DaoException 
 	 */
-	private List<Usuario> getEleitorado(String[] participantes) {
+	private List<Usuario> getEleitorado(String[] participantes) throws DaoException {
 		List<Usuario> eleitorado = new ArrayList<Usuario>();
 		UsuarioDao dao = DaoFactory.getInstance().getUsuarioDao();
 		for (String login : participantes) {
@@ -158,13 +156,6 @@ public class VotacaoServlet extends ServletBase {
 		return candidatos;
 	}
 
-	private void generateAsx(Votacao votacao) throws BaseException {
-		for (Candidato cand : votacao.getCandidatos()) {
-			VideoCandidato video = (VideoCandidato)cand;
-			createAsxFile(video.getArquivo().getParentFile(), video);
-		}
-	}
-
 	private Periodo getPeriodo(int numDiasEncerramento) {
 		Calendar cal = Calendar.getInstance();
 		Date agora = new Date();
@@ -177,55 +168,6 @@ public class VotacaoServlet extends ServletBase {
 		Date termino = new Date(cal.getTime().getTime());
 		Periodo periodo = new Periodo(agora, termino, "dd/MM/yyyy HH:mm:ss");
 		return periodo;
-	}
-
-	private List<Usuario> getEleitores(String participantes) {
-		String[] arrayParticipantes = participantes.split(";");
-		List<Usuario> eleitores = new ArrayList<Usuario>();
-		UsuarioDao usuarioDao = DaoFactory.getInstance().getUsuarioDao();
-		for (String loginEleitor : arrayParticipantes) {
-			loginEleitor = loginEleitor.trim();
-			Usuario eleitor = usuarioDao.buscarPorLogin(loginEleitor);
-			if (eleitor != null) {
-				eleitores.add(eleitor);
-			} else {
-				System.out.println("login = " + loginEleitor + " não encontrado");
-			}
-		}
-		return eleitores;
-	}
-
-	private List<Candidato> getCandidatos(String localizacaoCand) throws BaseException {
-		File dirCandidatos = new File(localizacaoCand);
-		if (!dirCandidatos.isDirectory()) {
-			throw new BaseException("Diret�rio de candidatos inv�lido");
-		}
-		String[] fileList = dirCandidatos.list();
-		List<Candidato> candidatos = new ArrayList<Candidato>();
-		for (String fileNameCand : fileList) {
-			File candFile = new File(dirCandidatos, fileNameCand);
-			VideoCandidato cand = new VideoCandidato();
-			cand.setDescricao(candFile.getName());
-			cand.setArquivo(candFile);
-			cand.setTitulo(candFile.getAbsolutePath());
-			
-			
-			
-			candidatos.add(cand);
-		}	
-		return candidatos;
-	}
-
-	private void createAsxFile(File dirCandidatos, VideoCandidato cand) throws BaseException {
-		File asxFile = new File(dirCandidatos, cand.getId() + ".asx");
-		try {
-			RandomAccessFile raf = new RandomAccessFile(asxFile, "rw");
-			raf.writeUTF("<ASX Version=\"3.0\"><entry><ref href=\"" + cand.getArquivo().getAbsolutePath() + "\" /></entry></ASX>");
-			raf.close();
-			cand.setArquivoAsx(asxFile);
-		} catch (Exception e) {
-			throw new BaseException(e);
-		}
 	}
 
 }

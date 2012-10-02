@@ -12,6 +12,7 @@ import votacao.dao.ComparecimentoDao;
 import votacao.dao.DaoFactory;
 import votacao.dao.VotacaoDao;
 import votacao.exception.BaseException;
+import votacao.exception.DaoException;
 import votacao.exception.JaVotouException;
 
 /**
@@ -40,13 +41,6 @@ public class ConclusaoVotacaoServlet extends ServletBase {
 			
 			Usuario usuario = (Usuario)request.getSession().getAttribute("user");
 			Votacao votacao = votacaoDao.buscarPorId(idVotacao);
-			
-			Candidato candidato = candidatoDao.buscarPorId(idVotacao, idCandidato);
-			
-			
-			if (candidato == null) {
-				throw new BaseException("Candidato nao encontrado >> idVotacao=" + idVotacao + "; idCandidato=" + idCandidato);
-			}
 
 			ComparecimentoDao comparecimentoDao = 
 				DaoFactory.getInstance().getComparecimentoDao();
@@ -54,21 +48,31 @@ public class ConclusaoVotacaoServlet extends ServletBase {
 			Comparecimento comparecimento = comparecimentoDao.buscarPorId(idVotacao, usuario.getLogin());
 			
 			if (comparecimento != null) {
-				throw new JaVotouException("Este usuario já votou nesta votação");
+				throw new JaVotouException("Este usuario ja votou nesta vota��o");
 			}
-			comparecimento = new Comparecimento();
-			comparecimento.setIdCandidato(idCandidato);
-			comparecimento.setIdVotacao(idVotacao);
-			comparecimento.setLoginUsuario(usuario.getLogin());
+			
+			synchronized(this) { 
+				Candidato candidato = candidatoDao.buscarPorId(idVotacao, idCandidato);
+				
+				if (candidato == null) {
+					throw new BaseException("Candidato nao encontrado >> idVotacao=" + idVotacao + "; idCandidato=" + idCandidato);
+				}
+				
+				candidato.receberVoto();
+				
+				candidatoDao.salvar(candidato);
+			}
 
-			comparecimentoDao.salvar(comparecimento);
+			marcarComparecimento(
+					idVotacao, 
+					idCandidato, 
+					usuario,
+					comparecimentoDao);
 			
 			if (usuario.getTipo() == Usuario.Tipo.ELEITOR) {
-				//chutando usuario após votar
+				//chutando usuario apos votar
 				request.getSession().invalidate();
 			}
-			
-			candidato.receberVoto();
 
 			String nextJSP = "/restrito/eleitor/conclusaoVotacao.jsp";
 			request.setAttribute("votacao", votacao);
@@ -77,4 +81,17 @@ public class ConclusaoVotacaoServlet extends ServletBase {
 			throw new BaseException(e); 
 		}
 	}
+
+	private void marcarComparecimento(int idVotacao, int idCandidato,
+			Usuario usuario, ComparecimentoDao comparecimentoDao)
+			throws DaoException {
+		Comparecimento comparecimento;
+		comparecimento = new Comparecimento();
+		comparecimento.setIdCandidato(idCandidato);
+		comparecimento.setIdVotacao(idVotacao);
+		comparecimento.setLoginUsuario(usuario.getLogin());
+
+		comparecimentoDao.salvar(comparecimento);
+	}
+
 }

@@ -5,6 +5,7 @@ public class Comparecimento {
 	private int idVotacao;
 	private int idCandidato;
 	private String loginUsuario;
+	
 	public int getIdVotacao() {
 		return idVotacao;
 	}

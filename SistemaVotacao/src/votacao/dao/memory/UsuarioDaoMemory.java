@@ -6,7 +6,9 @@ import java.util.List;
 
 import votacao.bean.Usuario;
 import votacao.bean.Usuario.Tipo;
+import votacao.bean.Votacao;
 import votacao.dao.UsuarioDao;
+import votacao.exception.DaoException;
 
 class UsuarioDaoMemory implements UsuarioDao {
 
@@ -113,5 +115,12 @@ class UsuarioDaoMemory implements UsuarioDao {
 			}
 		}
 		return listaUsuarioTipo;
+	}
+
+	@Override
+	public List<Usuario> buscarPorVotacao(int idVotacao) throws DaoException {
+		VotacaoDaoMemory dao = new VotacaoDaoMemory();
+		Votacao votacao = dao.buscarPorId(idVotacao);
+		return votacao.getEleitorado();
 	}
 }

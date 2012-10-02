@@ -192,7 +192,7 @@
 					
 					<tr>
 						<td colspan="3">
-							Obrigatório a alteração de senha : <input type="checkbox" id="chkAlteracaoObrigatoria" name="chkAlteracaoObrigatoria" />
+							Obrigar a alteração de senha : <input type="checkbox" id="chkAlteracaoObrigatoria" name="chkAlteracaoObrigatoria" />
 						</td>
 					</tr>
 				</tbody>

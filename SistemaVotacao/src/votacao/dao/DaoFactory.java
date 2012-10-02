@@ -1,10 +1,10 @@
 package votacao.dao;
 
-import votacao.dao.memory.MemoryDaoFactory;
+import votacao.dao.sqlserver.SqlServerDaoFactory;
 
 public abstract class DaoFactory {
 	
-	private static DaoFactory instance = new MemoryDaoFactory();
+	private static DaoFactory instance = new SqlServerDaoFactory();
 	
 	public static DaoFactory getInstance() {
 		return DaoFactory.instance;

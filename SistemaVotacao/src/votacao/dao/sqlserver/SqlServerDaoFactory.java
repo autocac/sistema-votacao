@@ -13,22 +13,22 @@ public class SqlServerDaoFactory extends DaoFactory {
 
 	@Override
 	public UsuarioDao getUsuarioDao() {
-		return null;
+		return new UsuarioDaoSqlServer();
 	}
 
 	@Override
 	public CandidatoDao getCandidatoDao() {
-		return null;
+		return new CandidatoDaoSqlServer();
 	}
 
 	@Override
 	public ComparecimentoDao getComparecimentoDao() {
-		return null;
+		return new ComparecimentoDaoSqlServer();
 	}
 
 	@Override
 	public VotacaoDao getVotacaoDao() {
-		return null;
+		return new VotacaoDaoSqlServer();
 	}
 
 }

@@ -4,32 +4,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<table border="1">
-	<tr>
-		<td>
-			<a href="/SistemaVotacao/ListaVotacoesServlet">Lista Votações</a>
-		</td>
-		<c:if test="${user.tipo.codigo eq 'A'}">
-			<td>
+<table border="0" cellpadding="5" >
+	
+	<c:if test="${user.tipo.codigo eq 'A'}">
+		<tr>
+			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
 				<a href="/SistemaVotacao/VotacaoServlet">Nova Votação</a>
 			</td>
-			<td>
+			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
 				<a href="/SistemaVotacao/EleitorServlet">Novo Eleitor</a>
 			</td>
-			<td>
+			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
 				<a href="/SistemaVotacao/GeradorEleitoresServlet">Gerar Eleitores</a>
 			</td>
-			<td>
+			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
 				<a href="/SistemaVotacao/GeradorEleitoresServlet?acao=listar">Relatório de Eleitores que Faltam Trocar Senha</a>
 			</td>
-			<td>
+			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
 				<a href="/SistemaVotacao/ListaEleitoresServlet">Lista Eleitores</a>
 			</td>
-		</c:if>
-		<td>
+			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
+				<a href="/SistemaVotacao/ResultadosServlet">Resultados</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5"></td>
+		</tr>
+	</c:if>
+	
+	
+	<tr>
+		<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
+			<a href="/SistemaVotacao/ListaVotacoesServlet">Lista Votações</a>
+		</td>
+		<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
 			<a href="/SistemaVotacao/restrito/eleitor/trocarSenha.jsp">Trocar Senha</a>
 		</td>
-		<td>
+		<td align="char" style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
 			<a href="/SistemaVotacao/LogoutServlet">Sair</a>
 		</td>
 	</tr>

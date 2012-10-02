@@ -1,7 +1,7 @@
 package votacao.exception;
 
 @SuppressWarnings("serial")
-public class DaoException extends Exception {
+public class DaoException extends BaseException {
 
 	public DaoException() {
 		super();

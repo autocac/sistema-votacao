@@ -66,7 +66,10 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								${candidado.id} - ${candidado.descricao} - Votos : ${candidado.numeroVotos}
+								${candidado.id} - ${candidado.descricao}
+								<c:if test="${user.tipo.codigo eq 'A'}"> 
+									<font size="10"> - Votos : ${candidado.numeroVotos} </font>
+								</c:if>
 							</td>
 						</tr>
 					</c:forEach>

@@ -10,6 +10,7 @@ import votacao.bean.Periodo;
 import votacao.bean.Usuario;
 import votacao.bean.Votacao;
 import votacao.dao.VotacaoDao;
+import votacao.exception.DaoException;
 
 
 class VotacaoDaoMemory implements VotacaoDao {
@@ -137,6 +138,11 @@ class VotacaoDaoMemory implements VotacaoDao {
 			}
 		}
 		return votacoes;
+	}
+
+	@Override
+	public List<Votacao> buscarTodas() throws DaoException {
+		return listaVotacoes;
 	}
 	
 }

@@ -16,6 +16,7 @@ import votacao.dao.UsuarioDao;
 import votacao.exception.BaseException;
 import votacao.exception.SessaoInvalidaException;
 import votacao.exception.UsuarioOuSenhaInvalidosException;
+import votacao.util.db.DbUtil;
 
 public abstract class ServletBase extends HttpServlet {
 	
@@ -26,6 +27,7 @@ public abstract class ServletBase extends HttpServlet {
     }
 
 	public void init(ServletConfig config) throws ServletException {
+		
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,6 +40,7 @@ public abstract class ServletBase extends HttpServlet {
 
 	public void process(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			DbUtil.loadConf(request);
 			HttpSession session = request.getSession();
 			if (session.isNew()) {
 				redirectLogin(request, response);
@@ -51,12 +54,12 @@ public abstract class ServletBase extends HttpServlet {
 					String senha = request.getParameter("pass");
 
 					if (usuario == null) {
-						throw new SessaoInvalidaException("Sessão inválida");
+						throw new SessaoInvalidaException("Sessão inv�lida");
 					}
 						
 					user = usuarioDao.buscarPorLogin(usuario);
 					if (user == null || !user.isSenhaOk(senha)) {
-						throw new UsuarioOuSenhaInvalidosException("Usuário ou senha inválidos");
+						throw new UsuarioOuSenhaInvalidosException("Usuário ou senha inv�lidos");
 					}
 					request.setAttribute("user", user);
 					session.setAttribute("user", user);

@@ -11,6 +11,8 @@ public class Votacao {
 	private List<Candidato> candidatos;
 	private List<Usuario> eleitorado;
 	private Usuario administrador;
+	private boolean secreta;
+	
 	public int getId() {
 		return id;
 	}
@@ -50,4 +52,11 @@ public class Votacao {
 	public boolean isEncerrada() {
 		return !this.periodo.dentroDoPeriodo(this.periodo.getDataNormalizada(new Date()));
 	}
+	public void setSecreta(boolean secreta) {
+		this.secreta = secreta;
+	}
+	public boolean isSecreta() {
+		return secreta;
+	}
+
 }

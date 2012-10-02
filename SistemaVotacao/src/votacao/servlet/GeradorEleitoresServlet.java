@@ -14,6 +14,7 @@ import votacao.bean.Usuario;
 import votacao.dao.DaoFactory;
 import votacao.dao.UsuarioDao;
 import votacao.exception.BaseException;
+import votacao.exception.DaoException;
 import votacao.util.GeradorTurma;
 
 
@@ -81,7 +82,7 @@ public class GeradorEleitoresServlet extends ServletBase {
 		redirect(request, response, nextJSP);
 	}
 
-	private List<Usuario> getListaUsuarios() {
+	private List<Usuario> getListaUsuarios() throws DaoException {
 		UsuarioDao dao = DaoFactory.getInstance().getUsuarioDao();
 		List<Usuario> lista = dao.buscarPorTipo(Usuario.Tipo.ELEITOR);
 		Iterator<Usuario> it = lista.iterator();
@@ -110,7 +111,7 @@ public class GeradorEleitoresServlet extends ServletBase {
 	}
 
 	
-	private void salvarTurmas(List<Turma> turmas) {
+	private void salvarTurmas(List<Turma> turmas) throws DaoException {
 		UsuarioDao dao = DaoFactory.getInstance().getUsuarioDao();
 		for (Turma turma : turmas) {
 			List<Usuario> eleitores = turma.getEleitores();

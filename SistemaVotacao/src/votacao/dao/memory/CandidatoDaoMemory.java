@@ -5,6 +5,7 @@ import java.util.List;
 import votacao.bean.Candidato;
 import votacao.bean.Votacao;
 import votacao.dao.CandidatoDao;
+import votacao.exception.DaoException;
 
 class CandidatoDaoMemory implements CandidatoDao {
 
@@ -30,6 +31,15 @@ class CandidatoDaoMemory implements CandidatoDao {
 		}
 		return null;
 	}
-	
-	
+
+	@Override
+	public void salvar(Candidato candidato) throws DaoException {
+		//Nao se aplica
+	}
+
+	@Override
+	public List<Candidato> buscarPorVotacao(int idVotacao) throws DaoException {
+		//Nao se aplica
+		return null;
+	}
 }
