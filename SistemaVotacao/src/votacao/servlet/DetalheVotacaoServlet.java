@@ -34,6 +34,8 @@ public class DetalheVotacaoServlet extends ServletBase {
 
 			String nextJSP = "/restrito/eleitor/detalheVotacao.jsp";
 			request.setAttribute("votacao", votacao);
+			int random = (int)(Math.random()*999999999);
+			request.setAttribute("random", String.format("%09d", random) );
 			request.getRequestDispatcher(nextJSP).forward(request, response);
 		} catch (Exception e) {
 			throw new BaseException(e);

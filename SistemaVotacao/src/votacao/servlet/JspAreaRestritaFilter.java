@@ -73,6 +73,7 @@ public class JspAreaRestritaFilter implements Filter {
 				Usuario user = (Usuario)session.getAttribute("user");
 			
 				if (user == null) {
+					request.setAttribute("msg", "Sessão inválida");
 					redirectLogin((HttpServletRequest)request, (HttpServletResponse)response, "/login.jsp");
 				} else {
 					//String path = ((HttpServletRequest)request).getServletPath();

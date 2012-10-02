@@ -35,6 +35,7 @@ public class Usuario {
 	private String senha;
 	private Tipo tipo;
 	private String nome;
+	private boolean trocarSenha;
 
 	public String getLogin() {
 		return login;
@@ -44,6 +45,10 @@ public class Usuario {
 		this.login = login;
 	}
 	
+	public String getSenha() {
+		return senha;
+	}
+
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
@@ -68,10 +73,18 @@ public class Usuario {
 		this.nome = nome;
 	}
 
+	public boolean isTrocarSenha() {
+		return trocarSenha;
+	}
+
+	public void setTrocarSenha(boolean trocarSenha) {
+		this.trocarSenha = trocarSenha;
+	}
+
 	public boolean isSenhaOk(String senha) {
 		//[TODO:Alterar antes de colocar em produ��o]
-		//return this.senha.equals(senha);
-		return true;
+		return this.senha.equals(senha);
+		//return true;
 	}
 
 }

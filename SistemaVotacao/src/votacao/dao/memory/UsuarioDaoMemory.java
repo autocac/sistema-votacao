@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import votacao.bean.Usuario;
+import votacao.bean.Usuario.Tipo;
 import votacao.dao.UsuarioDao;
 
 class UsuarioDaoMemory implements UsuarioDao {
@@ -98,5 +99,19 @@ class UsuarioDaoMemory implements UsuarioDao {
 				it.remove();
 			}
 		}
+	}
+
+	@Override
+	public List<Usuario> buscarPorTipo(Tipo eleitor) {
+		
+		ArrayList<Usuario> listaUsuarioTipo = new ArrayList<Usuario>(listaUsuarios);
+		Iterator<Usuario> it = listaUsuarioTipo.iterator();
+		while (it.hasNext()) {
+			Usuario u = it.next();
+			if (u.getTipo() != eleitor) {
+				it.remove();
+			}
+		}
+		return listaUsuarioTipo;
 	}
 }

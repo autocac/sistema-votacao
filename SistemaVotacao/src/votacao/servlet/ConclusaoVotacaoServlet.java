@@ -12,6 +12,7 @@ import votacao.dao.ComparecimentoDao;
 import votacao.dao.DaoFactory;
 import votacao.dao.VotacaoDao;
 import votacao.exception.BaseException;
+import votacao.exception.JaVotouException;
 
 /**
  * Servlet implementation class ConclusaoVotacaoServlet
@@ -50,11 +51,16 @@ public class ConclusaoVotacaoServlet extends ServletBase {
 			ComparecimentoDao comparecimentoDao = 
 				DaoFactory.getInstance().getComparecimentoDao();
 			
-			Comparecimento comparecimento = new Comparecimento();
+			Comparecimento comparecimento = comparecimentoDao.buscarPorId(idVotacao, usuario.getLogin());
+			
+			if (comparecimento != null) {
+				throw new JaVotouException("Este usuario já votou nesta votação");
+			}
+			comparecimento = new Comparecimento();
 			comparecimento.setIdCandidato(idCandidato);
 			comparecimento.setIdVotacao(idVotacao);
 			comparecimento.setLoginUsuario(usuario.getLogin());
-			
+
 			comparecimentoDao.salvar(comparecimento);
 			
 			if (usuario.getTipo() == Usuario.Tipo.ELEITOR) {

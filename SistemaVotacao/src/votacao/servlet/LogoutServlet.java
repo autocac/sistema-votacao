@@ -19,7 +19,7 @@ public class LogoutServlet extends ServletBase {
 		try {
 			request.getSession().removeAttribute("user");
 			//chutando usuario após votar
-			//request.getSession().invalidate();
+			request.getSession().invalidate();
 			
 			String nextJSP = "/login.jsp";
 			request.getRequestDispatcher(nextJSP).forward(request, response);

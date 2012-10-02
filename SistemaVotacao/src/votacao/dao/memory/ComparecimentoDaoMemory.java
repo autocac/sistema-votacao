@@ -15,16 +15,24 @@ class ComparecimentoDaoMemory implements ComparecimentoDao {
 		listaComparecimento = new ArrayList<Comparecimento>();
 	}
 	
+	public Comparecimento buscarPorId(int idVotacao, String login) {
+		Comparecimento presenca = null;
+		for (Comparecimento c : listaComparecimento) {
+			if (c.getIdVotacao() == idVotacao 
+					&& c.getLoginUsuario().equals(login)) {
+				 presenca = c;
+			}
+		}
+		return presenca;
+	}
+	
 	/* (non-Javadoc)
 	 * @see votacao.dao.ComparecimentoDao#salvar(votacao.bean.Comparecimento)
 	 */
 	@Override
 	public void salvar(Comparecimento comparecimento) throws DaoException{
-		for (Comparecimento c : listaComparecimento) {
-			if (c.getIdVotacao() == comparecimento.getIdVotacao() 
-					&& c.getLoginUsuario().equals(comparecimento.getLoginUsuario())) {
-				throw new DaoException("Este usuario ja compareceu e votou nesta vota��o");
-			}
+		if (null != buscarPorId(comparecimento.getIdVotacao(), comparecimento.getLoginUsuario())) {
+			throw new DaoException("Este usuario ja compareceu e votou nesta votação");
 		}
 		listaComparecimento.add(comparecimento);
 	}

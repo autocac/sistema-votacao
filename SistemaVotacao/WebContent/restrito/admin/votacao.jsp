@@ -16,6 +16,16 @@
 			    return this.replace(/^\s*/, "").replace(/\s*$/, "");
 			}
 			
+			Array.prototype.remove = function(start, end) {
+			    this.splice(start, end);
+			    return this;
+			}
+
+			Array.prototype.insert = function(pos, item) {
+			    this.splice(pos, 0, item);
+			    return this;
+			}
+			
 			function setBorder(id, px, att) {
 				var value = px + 'px solid #000000';
 				//alert(value);
@@ -204,13 +214,15 @@
             		}
             		participantes.value = listPipe;
             		alert('participantes.value=' + participantes.value);
-            		var txtLocalizacaoCand = document.getElementById('txtLocalizacaoCand');
+
             		if (isEmpty(txtDescricao, 'Descrição votação')) {
 						return false;
 					}
-            		if (isEmpty(txtLocalizacaoCand, 'Localização')) {
-						return false;
-					}
+            		
+//             		var txtLocalizacaoCand = document.getElementById('txtLocalizacaoCand');
+//             		if (isEmpty(txtLocalizacaoCand, 'Localização')) {
+// 						return false;
+// 					}
             		document.frmVotacao.submit();
             		
             		
@@ -262,6 +274,27 @@
 				}
 				return ret;
 			}
+			
+			function addCand() {
+				cloneRow();
+			}
+			
+            function cloneRow() {
+            	  var tblBody = document.getElementById("candTable").tBodies[0];
+            	  var newNode = tblBody.rows[0].cloneNode(true);
+            	  tblBody.appendChild(newNode);
+                  return false;
+            }
+            
+            function deleteRows() {
+            	var tblBody = document.getElementById("candTable").tBodies[0];
+            	var i = tblBody.rows.length - 1;
+            	for (; i > 0; i--) {
+            		tblBody.deleteRow(i);
+            	}
+            	return false;
+            }
+
 		</script>
 	</head>
 	<body>
@@ -294,7 +327,7 @@
 				</table>
 			</c:when>
 			<c:otherwise>
-				<form id="frmVotacao" name="frmVotacao" action="/SistemaVotacao/VotacaoServlet" method="post" >
+				<form id="frmVotacao" name="frmVotacao" action="/SistemaVotacao/VotacaoServlet" method="post"  enctype="multipart/form-data" >
 					<table align="center" >
 						<tr>
 							<td id="aba0" style="border-collapse:collapse;border-left: 3px solid #000000; border-top: 3px solid #000000; border-right: 3px solid #000000;" align="center" >
@@ -310,7 +343,7 @@
 						<tr>
 							<td colspan="3" style="border-collapse:collapse;border-left: 3px solid #000000; border-right: 2px solid #000000; border-bottom: 2px solid #000000;">
 								
-								<div id="divVotacao" style="display: block; width: 500px; height: 250px;"  >
+								<div id="divVotacao" style="display: block; width: 700px; height: 250px;"  >
 									<table>
 										<tr>
 											<td>Descrição : </td>
@@ -339,7 +372,7 @@
 										</tr>
 									</table>
 								</div>
-								<div id="divEleitores" style="display: none; width: 500px; height: 250px;" >
+								<div id="divEleitores" style="display: none; width: 700px; height: 250px;" >
 									
 									<table >
 										<tr>
@@ -382,19 +415,32 @@
 										</tr>
 									</table>
 								</div>
-								<div id="divCandidatos" style="display: none; width: 500px; height: 250px; overflow: auto;" align="center" >
-									<table id="candTable" >
-										<tr>
-											<td>Localização Candidatos : </td>
-										</tr>
-										<tr id="rowToClone" >
-											<td>
-												<input type="text" id="txtLocalizacaoCand" name="txtLocalizacaoCand" size="30" />
-											</td>
-										</tr>
+								<div id="divCandidatos" style="display: none; width: 700px; height: 250px; overflow: auto;" align="center" >
+									<table id="candTable">
+										<thead>
+											<tr>
+												<th>Título</th>
+												<th>Descrição</th>
+												<th>Imagem</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id="rowToClone" >
+												<td valign="top">
+													<input type="text" id="txtTitulo" name="txtTitulo" size="20" />
+												</td>
+												<td>
+													<textarea rows="4" cols="15" id="txtDescricaoCandidato" name="txtDescricaoCandidato" ></textarea>
+												</td>
+												<td>
+													<input type="file" id="btnUpload" name="btnUpload" value="Upload" />
+												</td>
+											</tr>
+										</tbody>
 									</table>
 								</div>
-								
+								<input type="button" id="btnAddCandidato" name="btnAddCandidato" value="Adicionar" onclick="javascript:addCand();" />
+								<input type="button" id="btnReset" name="btnReset" value="Reset" onclick="javascript:deleteRows();" />
 							</td>
 						</tr>
 						<tr>

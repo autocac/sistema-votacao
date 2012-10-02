@@ -8,10 +8,9 @@
 		<title>Login - Sistema Votação</title>
 	</head>
 	<body>
-		<h1>Login - Sistema Votação</h1>
+		<h1>Trocar de Senha - Sistema Votação</h1>
 		<h2>${msg}</h2>
 		<%
-			request.getSession().removeAttribute("user");
 			String action = (String)request.getAttribute("action");
 			if (action == null || action.endsWith("jsp")) {
 				action = "/SistemaVotacao/ListaVotacoesServlet";
@@ -24,12 +23,15 @@
 				align="center">
 				<tr>
 					<td align="right">Usuário :</td>
-					<td><input type="text" id="user" name="user" size="15"
-						autocomplete="off" /></td>
+					<td><input type="text" id="user" name="user" size="15" readonly="readonly" value="${user.login}" /></td>
 				</tr>
 				<tr>
-					<td align="right">Senha :</td>
-					<td><input type="password" id="pass" name="pass" size="15" /></td>
+					<td align="right">Nova Senha:</td>
+					<td><input type="password" id="newPass1" name="newPass1" size="15" /></td>
+				</tr>
+				<tr>
+					<td align="right">Confirmação de Senha:</td>
+					<td><input type="password" id="newPass2" name="newPass2" size="15" /></td>
 				</tr>
 				<tr>
 					<td></td>

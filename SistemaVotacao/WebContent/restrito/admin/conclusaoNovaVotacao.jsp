@@ -10,17 +10,11 @@
 		<title>Votação ${votacao.id} - Sistema Votação</title>
 	</head>
 	<body>
-		<table border="1">
-			<tr>
-				<td>
-					<a href="/SistemaVotacao/login.jsp">Login</a>
-				</td>
-			</tr>
-		</table>
+		<jsp:include page="/menu.jsp" />
 		
 		<h1 align="center">Votação ${votacao.id}</h1>
 		
-		<h2 align="center">Parabéns, voto bem sucedido!</h2>
+		<h2 align="center">Parabéns, Nova Votação criada com sucesso!</h2>
 		
 	</body>
 </html>

@@ -111,4 +111,24 @@
     <servlet-name>VotacaoServlet</servlet-name>
     <url-pattern>/VotacaoServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GeradorEleitoresServlet</display-name>
+    <servlet-name>GeradorEleitoresServlet</servlet-name>
+    <servlet-class>votacao.servlet.GeradorEleitoresServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GeradorEleitoresServlet</servlet-name>
+    <url-pattern>/GeradorEleitoresServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetImageServlet</display-name>
+    <servlet-name>GetImageServlet</servlet-name>
+    <servlet-class>votacao.servlet.GetImageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetImageServlet</servlet-name>
+    <url-pattern>/GetImageServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

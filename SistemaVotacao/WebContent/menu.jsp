@@ -6,10 +6,10 @@
 
 <table border="1">
 	<tr>
+		<td>
+			<a href="/SistemaVotacao/ListaVotacoesServlet">Lista Votações</a>
+		</td>
 		<c:if test="${user.tipo.codigo eq 'A'}">
-			<td>
-				<a href="/SistemaVotacao/ListaVotacoesServlet">Lista Votações</a>
-			</td>
 			<td>
 				<a href="/SistemaVotacao/VotacaoServlet">Nova Votação</a>
 			</td>
@@ -17,9 +17,18 @@
 				<a href="/SistemaVotacao/EleitorServlet">Novo Eleitor</a>
 			</td>
 			<td>
+				<a href="/SistemaVotacao/GeradorEleitoresServlet">Gerar Eleitores</a>
+			</td>
+			<td>
+				<a href="/SistemaVotacao/GeradorEleitoresServlet?acao=listar">Relatório de Eleitores que Faltam Trocar Senha</a>
+			</td>
+			<td>
 				<a href="/SistemaVotacao/ListaEleitoresServlet">Lista Eleitores</a>
 			</td>
 		</c:if>
+		<td>
+			<a href="/SistemaVotacao/restrito/eleitor/trocarSenha.jsp">Trocar Senha</a>
+		</td>
 		<td>
 			<a href="/SistemaVotacao/LogoutServlet">Sair</a>
 		</td>

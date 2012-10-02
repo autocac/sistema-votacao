@@ -3,6 +3,7 @@ package votacao.dao;
 import java.util.List;
 
 import votacao.bean.Usuario;
+import votacao.bean.Usuario.Tipo;
 
 public interface UsuarioDao {
 
@@ -19,5 +20,7 @@ public interface UsuarioDao {
 	public abstract void apagar(Usuario usuario);
 
 	public abstract void apagar(String login);
+
+	public abstract List<Usuario> buscarPorTipo(Tipo eleitor);
 
 }
