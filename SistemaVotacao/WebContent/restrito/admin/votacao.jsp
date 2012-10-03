@@ -213,7 +213,7 @@
             				listaParticipantes.options[i].value + ';';
             		}
             		participantes.value = listPipe;
-            		alert('participantes.value=' + participantes.value);
+            		//alert('participantes.value=' + participantes.value);
 
             		if (isEmpty(txtDescricao, 'Descrição votação')) {
 						return false;
@@ -438,9 +438,9 @@
 											</tr>
 										</tbody>
 									</table>
+									<input type="button" id="btnAddCandidato" name="btnAddCandidato" value="Adicionar" onclick="javascript:addCand();" />
+									<input type="button" id="btnReset" name="btnReset" value="Reset" onclick="javascript:deleteRows();" />
 								</div>
-								<input type="button" id="btnAddCandidato" name="btnAddCandidato" value="Adicionar" onclick="javascript:addCand();" />
-								<input type="button" id="btnReset" name="btnReset" value="Reset" onclick="javascript:deleteRows();" />
 							</td>
 						</tr>
 						<tr>
