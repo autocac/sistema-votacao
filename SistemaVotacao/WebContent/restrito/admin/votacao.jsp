@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -304,7 +305,8 @@
 		<h2>${msg}</h2>
 		
 		<c:choose>
-			<c:when test="${acao eq 'concluir'}">
+<%-- 			<c:when test="${acao eq 'concluir'}"> --%>
+			<c:when test="${fn:contains(acao, 'concluir')}">
 				<table align="center">
 					<tr>
 						<td>
