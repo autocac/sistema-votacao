@@ -51,21 +51,26 @@ public class DbUtil {
 		
 			try { 
 			    properties.load( is ); 
-			    URL_DATABASE = properties.getProperty("database.url");
-			    DRIVER_JDBC = properties.getProperty("database.driver");
-			    USUARIO_DB = properties.getProperty("database.user");
-			    SENHA_USUARIO_DB = properties.getProperty("database.pass");
-			    
-				LOG.info("URL DATABASE : " + URL_DATABASE);
-				LOG.info("DRIVER JDBC : " + DRIVER_JDBC);
-				LOG.info("Carregando driver ");
-				Class.forName(DRIVER_JDBC);
-				LOG.info("Driver carregado");
+			    loadByProperties(properties);
 			} catch (Exception e) { 
 			    System.out.println("--- Erro Carregando Arquivo de Configuração ---"); 
 			    e.printStackTrace();
 			}
 		}
+	}
+
+	public static void loadByProperties(Properties properties)
+			throws ClassNotFoundException {
+		URL_DATABASE = properties.getProperty("database.url");
+		DRIVER_JDBC = properties.getProperty("database.driver");
+		USUARIO_DB = properties.getProperty("database.user");
+		SENHA_USUARIO_DB = properties.getProperty("database.pass");
+		
+		LOG.info("URL DATABASE : " + URL_DATABASE);
+		LOG.info("DRIVER JDBC : " + DRIVER_JDBC);
+		LOG.info("Carregando driver ");
+		Class.forName(DRIVER_JDBC);
+		LOG.info("Driver carregado");
 	}
 
 //	static {
