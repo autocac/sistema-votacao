@@ -70,6 +70,9 @@ public class UsuarioDaoSqlServer implements UsuarioDao {
 	private static final String CRIAR_ELEIORADO =  "" +
 	" insert into TB_ELEITORADO (LOGIN, ID_VOTACAO, FL_COMPARECEU)" +
 	" values ( ?, ?, 'N') ";
+	
+	private static final String REMOVER_ELEIORADO =  "" +
+	" delete from TB_ELEITORADO where ID_VOTACAO = ?";
 
 	
 	@Override
@@ -129,6 +132,21 @@ public class UsuarioDaoSqlServer implements UsuarioDao {
 		return usuario;
 	}
 
+	void removerEleitores(Connection conn, int idVotacao) throws DaoException {
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		try {
+			statement = conn.prepareStatement(REMOVER_ELEIORADO);
+			statement.setInt(1, idVotacao);
+			
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			DbUtil.close(null, statement, result);
+		}
+	}
+	
 	void criarEleitor(Connection conn, Usuario usuario, int idVotacao) throws DaoException {
 		PreparedStatement statement = null;
 		ResultSet result = null;

@@ -14,6 +14,9 @@
 				<a href="/SistemaVotacao/VotacaoServlet">Nova Votação</a>
 			</td>
 			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
+				<a href="/SistemaVotacao/EditarVotacaoServlet">Editar Votação</a>
+			</td>
+			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">
 				<a href="/SistemaVotacao/EleitorServlet">Novo Eleitor</a>
 			</td>
 			<td style="border-collapse:collapse;border-left: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000;">

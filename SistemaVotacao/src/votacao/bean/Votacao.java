@@ -58,5 +58,14 @@ public class Votacao {
 	public boolean isSecreta() {
 		return secreta;
 	}
-
+	public int getMaxIdCandidato() {
+		int max = 0;
+		for (Candidato c : getCandidatos()) {
+			if (max < c.getId()) {
+				max = c.getId();
+			}
+			
+		}
+		return max;
+	}
 }

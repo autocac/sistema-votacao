@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -101,12 +102,19 @@ public class DbUtil {
 		}
 	}
 	
-	public static java.util.Date getJavaDate(ResultSet result, String nomeCampo) throws SQLException {
-		Date dataFalecimento = result.getDate(nomeCampo);
+	public static java.util.Date getJavaDate(ResultSet result, String nomeCampo, Class tipo) throws SQLException {
 		java.util.Date javaDate = null;
-		if (dataFalecimento != null) {
-			javaDate = new Date(dataFalecimento.getTime());
+		
+		if (java.sql.Date.class.equals(tipo)) {
+			if (result.getDate(nomeCampo) != null) {
+				javaDate = new Date(result.getDate(nomeCampo).getTime());
+			}
+		} else if (java.sql.Timestamp.class.equals(tipo)) {
+			if (result.getTimestamp(nomeCampo) != null) {
+				javaDate = new java.util.Date(result.getTimestamp(nomeCampo).getTime());
+			}
 		}
+		
 		return javaDate;
 	}
 	
@@ -128,6 +136,14 @@ public class DbUtil {
 			}
 		}
 
+	}
+
+	public static Timestamp getTimestamp(java.util.Date date) {
+		Timestamp sqlDate = null;
+		if (date != null) {
+			sqlDate = new java.sql.Timestamp(date.getTime());
+		}
+		return sqlDate;
 	}
 	
 	public static Date getSqlDate(java.util.Date date) {

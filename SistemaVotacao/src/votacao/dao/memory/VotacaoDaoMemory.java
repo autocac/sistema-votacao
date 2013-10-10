@@ -3,6 +3,7 @@ package votacao.dao.memory;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import votacao.bean.Candidato;
@@ -85,6 +86,18 @@ class VotacaoDaoMemory implements VotacaoDao {
 			c.setIdVotacao(idVotacao);
 			c.setId(idCandidato++);
 		}
+	}
+	
+	@Override
+	public void salvar(Votacao votacao) throws DaoException {
+		Iterator<Votacao> it = listaVotacoes.iterator();
+		while (it.hasNext()) {
+			Votacao v = it.next();
+			if (v.getId() == votacao.getId()) {
+				it.remove();
+			}
+		}
+		listaVotacoes.add(votacao);
 	}
 	
 	/* (non-Javadoc)

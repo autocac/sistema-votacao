@@ -52,6 +52,27 @@ public class CandidatoDaoSqlServer implements CandidatoDao {
 		CAMPOS + 
 	") values ( ?, ?, ?, ?, ?, ?, ?) ";
 	
+	private static final String APAGAR_POR_VOTACAO = "" +
+			" delete from TB_CANDIDATO where ID_VOTACAO = ? ";
+			
+
+	void apagarPorVotacao(Connection conn,  int idVotacao) throws DaoException {
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		try {
+			statement = conn.prepareStatement(APAGAR_POR_VOTACAO);
+
+			statement.setInt(1, idVotacao);
+			
+			statement.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			DbUtil.close(null, statement, result);
+		}
+	}
+	
 	void criar(Connection conn,  Candidato candidato) throws DaoException {
 		int novoId = DbUtil.getProximoValorSequence(conn, "TB_CANDIDATO", "ID_CANDIDATO");
 		PreparedStatement statement = null;

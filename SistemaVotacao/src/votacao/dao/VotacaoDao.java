@@ -19,4 +19,6 @@ public interface VotacaoDao {
 	public abstract List<Votacao> buscarPorUsuario(Usuario user) throws DaoException ;
 
 	public List<Votacao> buscarTodas() throws DaoException;
+
+	void salvar(Votacao votacao) throws DaoException;
 }

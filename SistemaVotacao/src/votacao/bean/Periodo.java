@@ -3,6 +3,8 @@ package votacao.bean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class Periodo {
 	private final Date dataInicio;
@@ -60,6 +62,14 @@ public class Periodo {
 	public long getDuracao() {
 		long dif = this.dataFim.getTime() - this.dataInicio.getTime();
 		return (dif / 1000) / 60;
+	}
+	
+	public List<ComponenteData> getComponentesDataFim() {
+		return ComponenteData.getComponentes(dataFim);
+	}
+	
+	public List<ComponenteData> getComponentesDataInicio() {
+		return ComponenteData.getComponentes(dataInicio);
 	}
 
 	@Override

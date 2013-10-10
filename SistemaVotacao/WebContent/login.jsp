@@ -18,7 +18,7 @@
 			}
 			request.setAttribute("action", action);
 		%>
-		<form id="frmLogin" name="frmLogin" action="${action}">
+		<form id="frmLogin" name="frmLogin" action="${action}" method="post">
 			<table
 				style="border-collapse: collapse; border-left: 3px solid #000000; border-top: 3px solid #000000; border-right: 3px solid #000000; border-bottom: 3px solid #000000; width: 300px; height: 200px;"
 				align="center">

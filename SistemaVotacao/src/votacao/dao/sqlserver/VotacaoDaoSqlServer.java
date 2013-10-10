@@ -22,12 +22,12 @@ import votacao.util.db.DbUtil;
 public class VotacaoDaoSqlServer implements VotacaoDao {
 
 	private static final String CAMPOS = "" +
-		"ID_VOTACAO , " + 
 		"DESCRICAO , " + 
 		"DT_INI , " + 
 		"DT_FIM , " +
 		"LOGIN_ADMIN, " +
-		"FL_SECRETA ";
+		"FL_SECRETA ," +
+		"ID_VOTACAO ";
 	
 	private static final String APAGAR = "" +
 		" delete from TB_VOTACAO where ID_VOTACAO = ? ";
@@ -83,12 +83,8 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 		try {
 			statement = conn.prepareStatement(CRIAR);
 
-			statement.setInt(1, novoId);
-			statement.setString(2, votacao.getDescricao());
-			statement.setDate(3, DbUtil.getSqlDate(votacao.getPeriodo().getDataInicio()));
-			statement.setDate(4, DbUtil.getSqlDate(votacao.getPeriodo().getDataFim()));
-			statement.setString(5, votacao.getAdministrador().getLogin());
-			statement.setString(6, votacao.isSecreta()?"S":"N");
+			
+			setStatement(votacao, novoId, statement);
 
 			statement.executeUpdate();
 			
@@ -122,6 +118,68 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 			DbUtil.close(conn, statement, result);
 		}
 	}
+	
+	@Override
+	public synchronized void salvar(Votacao votacao) throws DaoException {
+		Connection conn = DbUtil.getConnection(false);
+		
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		try {
+			statement = conn.prepareStatement(ATUALIZAR);
+
+			setStatement(votacao, statement);
+
+			statement.executeUpdate();
+			
+			UsuarioDaoSqlServer daoUsuario = (UsuarioDaoSqlServer)DaoFactory.getInstance().getUsuarioDao();
+			daoUsuario.removerEleitores(conn, votacao.getId());
+			for (Usuario eleitor : votacao.getEleitorado()) {
+				daoUsuario.criarEleitor(conn, eleitor, votacao.getId());
+			}
+			
+			CandidatoDaoSqlServer daoCandidato = (CandidatoDaoSqlServer)DaoFactory.getInstance().getCandidatoDao();
+			daoCandidato.apagarPorVotacao(conn, votacao.getId());
+			for (Candidato candidato : votacao.getCandidatos()) {
+				candidato.setIdVotacao(votacao.getId());
+				daoCandidato.criar(conn, candidato);
+			}
+			
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				throw new DaoException(e1);
+			}
+			throw new DaoException(e);
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new DaoException(e);
+			}
+			DbUtil.close(conn, statement, result);
+		}
+	}
+
+	private void setStatement(
+			Votacao votacao, 
+			PreparedStatement statement) throws SQLException {
+		setStatement(votacao, votacao.getId(), statement);
+	}
+	
+	private void setStatement(
+			Votacao votacao, 
+			int novoId,
+			PreparedStatement statement) throws SQLException {
+		statement.setString(1, votacao.getDescricao());
+		statement.setTimestamp(2, DbUtil.getTimestamp(votacao.getPeriodo().getDataInicio()));
+		statement.setTimestamp(3, DbUtil.getTimestamp(votacao.getPeriodo().getDataFim()));
+		statement.setString(4, votacao.getAdministrador().getLogin());
+		statement.setString(5, votacao.isSecreta()?"S":"N");
+		statement.setInt(6, novoId);
+	}
 
 	@Override
 	public Votacao buscarPorId(int idVotacao) throws DaoException {
@@ -149,8 +207,8 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 		votacao.setId(result.getInt("ID_VOTACAO"));
 		votacao.setDescricao(result.getString("DESCRICAO"));
 		
-		Date dtIni = DbUtil.getJavaDate(result, "DT_INI");
-		Date dtFim = DbUtil.getJavaDate(result, "DT_FIM");
+		Date dtIni = DbUtil.getJavaDate(result, "DT_INI", java.sql.Timestamp.class);
+		Date dtFim = DbUtil.getJavaDate(result, "DT_FIM", java.sql.Timestamp.class);
 		Periodo p = new Periodo(dtIni, dtFim);
 		votacao.setPeriodo(p);
 		
