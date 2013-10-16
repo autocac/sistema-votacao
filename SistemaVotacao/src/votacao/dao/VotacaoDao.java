@@ -21,4 +21,6 @@ public interface VotacaoDao {
 	public List<Votacao> buscarTodas() throws DaoException;
 
 	void salvar(Votacao votacao) throws DaoException;
+	
+	public void apagar(int idVotacao) throws DaoException;
 }

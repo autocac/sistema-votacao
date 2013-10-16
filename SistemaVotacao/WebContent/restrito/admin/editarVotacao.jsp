@@ -341,7 +341,18 @@
             }
             
             function apagar() {
-            	alert('Nao implementado ainda');
+            	if (clicado == 0) {
+            		clicado = 1;
+            		
+                	var apagar = confirm('Deseja realmente apagar esta votação?');
+                	if (apagar) {
+                		document.getElementById("acao").value = 'apagar';
+                		document.frmVotacao.submit();                		
+                	}
+            	} else {
+					alert('Aguarde, operação em processamento');
+				}
+            	return false;
             }
             
             function apagarCandidato(name) {
@@ -482,11 +493,21 @@
 									<table>
 										<tr>
 											<td>ID VOTAÇÃO : ${votacao.id}</td>
-											<td><input type="hidden" id="idVotacao" name="idVotacao" value="${votacao.id}"/> </td>
+											<td>
+												<input type="hidden" id="idVotacao" name="idVotacao" value="${votacao.id}"/>
+											</td>
+											<td>
+												Imagem de Fundo
+											</td>
 										</tr>
 										<tr>
 											<td>Descrição : </td>
-											<td><input type="text" id="txtDescricao" name="txtDescricao" value="${votacao.descricao}" /></td>
+											<td>
+												<input type="text" id="txtDescricao" name="txtDescricao" value="${votacao.descricao}" />
+											</td>
+											<td rowspan="4" width="30%">
+												<img border="1" id="imagemFundo" name="imagemFundo" src="/SistemaVotacao/GetImageServlet?tipo=v&idVotacao=${votacao.id}&random=${random + 1}" width="200" height="160" />
+											</td>
 										</tr>
 										<tr>
 											<td>Início em : </td>
@@ -532,6 +553,12 @@
 													</tr>
 												</table>
 												<input type="hidden" id="txtDataFim" name="txtDataFim"/>
+											</td>
+										</tr>
+										<tr>
+											<td>Imagem de fundo : </td>
+											<td>
+												<input type="file" id="btnUploadImagemFundo" name="btnUploadImagemFundo" value="Imagem de Fundo" />
 											</td>
 										</tr>
 									</table>
@@ -605,7 +632,7 @@
 														<textarea rows="4" cols="15" id="txtDescricaoCandidato" name="txtDescricaoCandidato" ><c:out value="${candidato.descricao}"/></textarea>
 													</td>
 													<td valign="middle">
-														<img id="imagem" name="imagem" src="/SistemaVotacao/GetImageServlet?idVotacao=${votacao.id}&idCandidato=${candidato.id}&random=${random}" width="100" height="80" />
+														<img id="imagem" name="imagem" src="/SistemaVotacao/GetImageServlet?tipo=c&idVotacao=${votacao.id}&idCandidato=${candidato.id}&random=${random}" width="100" height="80" />
 														<input type="file" id="btnUpload" name="btnUpload" value="Upload" />
 													</td>
 												</tr>

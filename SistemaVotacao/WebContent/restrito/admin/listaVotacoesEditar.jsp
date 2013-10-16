@@ -37,7 +37,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td rowspan="2">----Selecione uma votacao para alterar----</td>
+					<td colspan="2">----Selecione uma votacao para alterar----</td>
 				</tr>
 			</tfoot>
 		</table>	

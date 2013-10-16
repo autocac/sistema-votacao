@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import votacao.bean.Candidato;
+import votacao.bean.Imagem;
 import votacao.bean.Periodo;
 import votacao.bean.Usuario;
 import votacao.bean.Votacao;
@@ -86,12 +87,30 @@ public class EditarVotacaoServlet extends ServletBase {
 					request.setAttribute("msg", msg);
 					mostrarDetalhe(request, response, idVotacao);
 				}
+			} else if ("apagar".equals(acao)) {
+				int idVotacao = manager.getInt("idVotacao");
+				apagarVotacao(idVotacao);
+				msg = "Votação apagada com sucesso";
+				
+				VotacaoDao votacaoDao = DaoFactory.getInstance().getVotacaoDao();
+				List<Votacao> votacoes = votacaoDao.buscarTodas();
+				request.setAttribute("votacoes", votacoes);
+				request.setAttribute("msg", msg);
+				String nextJSP = "/restrito/admin/listaVotacoesEditar.jsp";
+				request.getRequestDispatcher(nextJSP).forward(request, response);
 			}
 			
 
 		} catch (Exception e) {
 			throw new BaseException(e); 
 		}
+	}
+
+	private void apagarVotacao(int idVotacao) throws DaoException {
+		VotacaoDao votacaoDao = DaoFactory.getInstance().getVotacaoDao();
+		Votacao votacao = votacaoDao.buscarPorId(idVotacao);
+		
+		votacaoDao.apagar(votacao.getId());
 	}
 
 	private void mostrarDetalhe(
@@ -145,6 +164,12 @@ public class EditarVotacaoServlet extends ServletBase {
 
 		System.out.println("participantes=" + participantes);
 		
+		byte[] arrayImagemFundo = (byte[])manager.get("btnUploadImagemFundo");
+		String imagemFundoFileContentType = (String)manager.get("btnUploadImagemFundo_content_type");
+		String imagemFundoFileName = (String)manager.get("btnUploadImagemFundo_file");
+		Imagem imgFundo = new Imagem(imagemFundoFileName, imagemFundoFileContentType, arrayImagemFundo);
+		System.out.println(imgFundo);
+		
 		List idCandList = manager.getList("txtIdCand");
 		List titulosList = manager.getList("txtTitulo");
 		List descCandidatoList = manager.getList("txtDescricaoCandidato");
@@ -185,7 +210,7 @@ public class EditarVotacaoServlet extends ServletBase {
 		votacao.setAdministrador(admin);
 		votacao.setCandidatos(candidatos);
 		votacao.setEleitorado(eleitorado);
-		
+		votacao.setFundo(imgFundo);
 		
 		votacaoDao.salvar(votacao);
 		

@@ -54,7 +54,7 @@
 				<tr>
 					<td>
 						<div>	
-							<img src="/SistemaVotacao/GetImageServlet?idVotacao=${votacao.id}&idCandidato=${candidado.id}&random=${random}" width="300" height="250" />
+							<img src="/SistemaVotacao/GetImageServlet?tipo=c&idVotacao=${votacao.id}&idCandidato=${candidado.id}&random=${random}" width="300" height="250" />
 						</div>
 					</td>
 					<td>

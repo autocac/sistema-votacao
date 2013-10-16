@@ -32,6 +32,10 @@ public class UploadManager {
 		return parametros;
 	}
 
+	public Object get(String key) {
+		return getList(key).get(0);
+	}
+	
 	public String getString(String key) {
 		return (String)getList(key).get(0);
 	}

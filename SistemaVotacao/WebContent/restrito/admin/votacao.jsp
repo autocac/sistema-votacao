@@ -372,6 +372,12 @@
 												</select>
 											</td>
 										</tr>
+										<tr>
+											<td>Imagem de fundo : </td>
+											<td>
+												<input type="file" id="btnUploadImagemFundo" name="btnUploadImagemFundo" value="Imagem de Fundo" />
+											</td>
+										</tr>
 									</table>
 								</div>
 								<div id="divEleitores" style="display: none; width: 700px; height: 250px;" >

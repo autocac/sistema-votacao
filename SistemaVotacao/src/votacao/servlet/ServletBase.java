@@ -54,12 +54,12 @@ public abstract class ServletBase extends HttpServlet {
 					String senha = request.getParameter("pass");
 
 					if (usuario == null) {
-						throw new SessaoInvalidaException("Sess√£o inv·lida");
+						throw new SessaoInvalidaException("Sess„o inv·lida");
 					}
 						
 					user = usuarioDao.buscarPorLogin(usuario);
 					if (user == null || !user.isSenhaOk(senha)) {
-						throw new UsuarioOuSenhaInvalidosException("Usu√°rio ou senha inv·lidos");
+						throw new UsuarioOuSenhaInvalidosException("Usu·rio ou senha inv·lidos");
 					}
 					request.setAttribute("user", user);
 					session.setAttribute("user", user);
@@ -75,7 +75,7 @@ public abstract class ServletBase extends HttpServlet {
 							usuarioDao.salvar(user);
 							request.setAttribute("msg", "Senha alterada com sucesso");
 						} else {
-							request.setAttribute("msg", "Confirma√ß√£o de senha inv√°lida");
+							request.setAttribute("msg", "ConfirmaÁ„o de senha inv·lida");
 						}
 					}
 				}

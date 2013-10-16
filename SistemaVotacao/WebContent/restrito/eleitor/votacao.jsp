@@ -21,7 +21,7 @@
 					<ul>
 						<c:forEach var="votacao" items="${votacoes}">
 							<li>
-								<a href="/SistemaVotacao/DetalheVotacaoServlet?idVotacao=${votacao.id}">${votacao.id} - ${votacao.descricao}</a>
+								<a href="/SistemaVotacao/DetalheVotacaoServlet?idVotacao=${votacao.id}">${votacao.descricao}</a>
 							</li>
 						</c:forEach>
 					</ul>

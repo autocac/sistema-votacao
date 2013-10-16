@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import votacao.bean.Candidato;
+import votacao.bean.Imagem;
 import votacao.bean.Periodo;
 import votacao.bean.Usuario;
 import votacao.bean.Votacao;
@@ -26,7 +27,10 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 		"DT_INI , " + 
 		"DT_FIM , " +
 		"LOGIN_ADMIN, " +
-		"FL_SECRETA ," +
+		"FL_SECRETA , " +
+		"NM_ARQ_IMG_FUNDO , " +
+		"CONTENT_TYPE_IMG_FUNDO , " +
+		"IMAGEM_FUNDO , " +
 		"ID_VOTACAO ";
 	
 	private static final String APAGAR = "" +
@@ -39,13 +43,16 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 		"	DT_INI = ?, " + 
 		"	DT_FIM = ?, " +
 		"	LOGIN_ADMIN = ?, " +
-		"	FL_SECRETA = ? " +
+		"	FL_SECRETA = ?, " +
+		"	NM_ARQ_IMG_FUNDO = ?, " +
+		"	CONTENT_TYPE_IMG_FUNDO = ?, " +
+		"	IMAGEM_FUNDO = ? " +
 		" where ID_VOTACAO = ? ";
 	
 	private static final String CRIAR = "" +
 		" insert into TB_VOTACAO (" +
 			CAMPOS + 
-		") values ( ?, ?, ?, ?, ?, ?) ";
+		") values ( ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 	
 	private static final String SELECT = "" +
 		" select " +
@@ -67,7 +74,10 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 		"	V.DT_INI , " + 
 		"	V.DT_FIM , " +
 		"	V.LOGIN_ADMIN, " +
-		"	V.FL_SECRETA " +
+		"	V.FL_SECRETA ," +
+		"	V.NM_ARQ_IMG_FUNDO , " +
+		"	V.CONTENT_TYPE_IMG_FUNDO , " +
+		"	V.IMAGEM_FUNDO " +
 		" from TB_VOTACAO V " +
 		"	inner join TB_ELEITORADO E " +
 		"		on V.ID_VOTACAO = E.ID_VOTACAO " +
@@ -178,9 +188,14 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 		statement.setTimestamp(3, DbUtil.getTimestamp(votacao.getPeriodo().getDataFim()));
 		statement.setString(4, votacao.getAdministrador().getLogin());
 		statement.setString(5, votacao.isSecreta()?"S":"N");
-		statement.setInt(6, novoId);
+		Imagem img = votacao.getFundo();
+		statement.setString(6, (String)DbUtil.getAtributo(img, img.getNome()));
+		statement.setString(7, (String)DbUtil.getAtributo(img, img.getContentType()));
+		statement.setBytes(8, (byte[])DbUtil.getAtributo(img, img.getBytes()));
+		statement.setInt(9, novoId);
 	}
 
+	
 	@Override
 	public Votacao buscarPorId(int idVotacao) throws DaoException {
 		Connection conn = DbUtil.getConnection();
@@ -224,6 +239,12 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 		
 		List<Usuario> eleitorado = usuarioDao.buscarPorVotacao(votacao.getId());
 		votacao.setEleitorado(eleitorado);
+		
+		votacao.setFundo(
+				new Imagem(
+						result.getString("NM_ARQ_IMG_FUNDO"), 
+						result.getString("CONTENT_TYPE_IMG_FUNDO"), 
+						result.getBytes("IMAGEM_FUNDO")));
 		return votacao;
 	}
 
@@ -278,6 +299,40 @@ public class VotacaoDaoSqlServer implements VotacaoDao {
 			DbUtil.close(conn, statement, result);
 		}
 		return votacoes;
+	}
+
+	@Override
+	public void apagar(int idVotacao) throws DaoException {
+		
+		Connection conn = DbUtil.getConnection(false);
+		PreparedStatement statement = null;
+		try {
+			UsuarioDaoSqlServer daoUsuario = (UsuarioDaoSqlServer)DaoFactory.getInstance().getUsuarioDao();
+			daoUsuario.removerEleitores(conn, idVotacao);
+			
+			CandidatoDaoSqlServer daoCandidato = (CandidatoDaoSqlServer)DaoFactory.getInstance().getCandidatoDao();
+			daoCandidato.apagarPorVotacao(conn, idVotacao);
+
+			statement = conn.prepareStatement(APAGAR);
+			statement.setInt(1, idVotacao);
+			statement.executeUpdate();
+			
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				throw new DaoException(e1);
+			}
+			throw new DaoException(e);
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new DaoException(e);
+			}
+			DbUtil.close(conn, statement, null);
+		}
 	}
 
 }

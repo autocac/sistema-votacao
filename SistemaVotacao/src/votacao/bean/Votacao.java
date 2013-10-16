@@ -12,6 +12,7 @@ public class Votacao {
 	private List<Usuario> eleitorado;
 	private Usuario administrador;
 	private boolean secreta;
+	private Imagem fundo;
 	
 	public int getId() {
 		return id;
@@ -57,6 +58,12 @@ public class Votacao {
 	}
 	public boolean isSecreta() {
 		return secreta;
+	}
+	public Imagem getFundo() {
+		return fundo;
+	}
+	public void setFundo(Imagem fundo) {
+		this.fundo = fundo;
 	}
 	public int getMaxIdCandidato() {
 		int max = 0;

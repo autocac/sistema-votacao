@@ -118,6 +118,13 @@ public class DbUtil {
 		return javaDate;
 	}
 	
+	public static Object getAtributo(Object obj, Object valor) {
+		if (obj != null) {
+			return valor;
+		}
+		return null;
+	}
+	
 	public static byte[] getImage(ResultSet result, String nomeCampo) throws DaoException {
 		InputStream is = null;
 		try {

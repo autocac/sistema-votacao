@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import votacao.bean.Candidato;
+import votacao.bean.Imagem;
 import votacao.bean.Periodo;
 import votacao.bean.Usuario;
 import votacao.bean.Votacao;
@@ -52,6 +53,12 @@ public class VotacaoServlet extends ServletBase {
 				System.out.println("numDiasEncerramento=" + numDiasEncerramento);
 				System.out.println("participantes=" + participantes);
 				
+				byte[] arrayImagemFundo = (byte[])manager.get("btnUploadImagemFundo");
+				String imagemFundoFileContentType = (String)manager.get("btnUploadImagemFundo_content_type");
+				String imagemFundoFileName = (String)manager.get("btnUploadImagemFundo_file");
+				Imagem imgFundo = new Imagem(imagemFundoFileName, imagemFundoFileContentType, arrayImagemFundo);
+				System.out.println(imgFundo);
+				
 				List titulosList = manager.getList("txtTitulo");
 				List descCandidatoList = manager.getList("txtDescricaoCandidato");
 				List btnUploadFile = manager.getList("btnUpload_file");
@@ -78,6 +85,7 @@ public class VotacaoServlet extends ServletBase {
 				votacao.setAdministrador(admin);
 				votacao.setCandidatos(candidatos);
 				votacao.setEleitorado(eleitorado);
+				votacao.setFundo(imgFundo);
 				
 				VotacaoDao votacaoDao = DaoFactory.getInstance().getVotacaoDao();
 				votacaoDao.criar(votacao);

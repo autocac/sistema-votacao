@@ -157,5 +157,18 @@ class VotacaoDaoMemory implements VotacaoDao {
 	public List<Votacao> buscarTodas() throws DaoException {
 		return listaVotacoes;
 	}
+
+	@Override
+	public void apagar(int idVotacao) throws DaoException {
+
+		Iterator<Votacao> votacaoIterator = listaVotacoes.iterator();
+		while (votacaoIterator.hasNext()) {
+			Votacao v = votacaoIterator.next();
+			if (v.getId() == idVotacao) {
+				votacaoIterator.remove();
+			}
+		} 
+	}		
+
 	
 }

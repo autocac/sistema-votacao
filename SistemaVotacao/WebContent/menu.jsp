@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<table border="0" cellpadding="5" >
+<table border="0" cellpadding="5" bgcolor="#FFFFFF">
 
 <%-- 	<c:if test="${user.tipo.codigo == 'A'}"> --%>
 	<c:if test="${fn:contains(user.tipo.codigo, 'A')}">

@@ -25,11 +25,12 @@
 			}
 		</script>
 	</head>
-	<body>
+	<body background="/SistemaVotacao/GetImageServlet?tipo=v&idVotacao=${votacao.id}&random=${random}" bgproperties="fixed">
 		<jsp:include page="/menu.jsp" />
 		
+		<!-- 
 		<h1 align="center">Votação ${votacao.id}</h1>
-		
+		 -->
 		<c:choose>
 			<c:when test="${votacao.encerrada}">
 				<h2 align="center">Votação '${votacao.descricao}' Encerrada</h2>
@@ -38,13 +39,14 @@
 			
 				<h2 align="center">${votacao.descricao}</h2>
 				<h3 align="center">${msg}</h3>
+				<!--
 				<h4 align="center">
 					Início da votação : <fmt:formatDate value="${votacao.periodo.dataInicio}" pattern="dd/MM/yyyy HH:mm:ss"/>
 				</h4>
 				<h4 align="center">
 					Término da votação : <fmt:formatDate value="${votacao.periodo.dataFim}" pattern="dd/MM/yyyy HH:mm:ss"/>
 				</h4>
-				
+				-->		
 				<h4 align="center">Para votar em um candidato, clique em 'Votar' ao lado do candidato</h4>
 				
 				<table align="center">
@@ -57,7 +59,7 @@
 						<tr>
 							<td>
 								<div>	
-									<img src="/SistemaVotacao/GetImageServlet?idVotacao=${votacao.id}&idCandidato=${candidado.id}&random=${random}" width="400" height="350" />
+									<img src="/SistemaVotacao/GetImageServlet?tipo=c&idVotacao=${votacao.id}&idCandidato=${candidado.id}&random=${random}" width="400" height="350" />
 								</div>
 							</td>
 							<td>
@@ -65,6 +67,7 @@
 <%-- 								<a href="#" onclick="javascript:votar(${votacao.id}, ${candidado.id});">Votar</a> --%>
 							</td>
 						</tr>
+						<!-- 
 						<tr>
 							<td colspan="2">
 								${candidado.id} - ${candidado.descricao}
@@ -74,6 +77,7 @@
 								</c:if>
 							</td>
 						</tr>
+						 -->
 					</c:forEach>
 				</table>
 			</c:otherwise>
