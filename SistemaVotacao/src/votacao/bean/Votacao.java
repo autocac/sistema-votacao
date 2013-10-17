@@ -63,7 +63,11 @@ public class Votacao {
 		return fundo;
 	}
 	public void setFundo(Imagem fundo) {
-		this.fundo = fundo;
+		if ((fundo != null )
+				&& ((this.fundo == null) 
+						|| (fundo.getNome() != null && fundo.getNome().trim().length() > 0 ))) {
+			this.fundo = fundo;
+		}
 	}
 	public int getMaxIdCandidato() {
 		int max = 0;
